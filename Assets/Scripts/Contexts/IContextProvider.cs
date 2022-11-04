@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
-using Services.Logger;
+using Services.ServiceLocator;
 
 namespace Contexts
 {
     public interface IContextProvider
     {
-        void Initialize(List<IContext> contexts, ILogger logger);
+        void Initialize(List<IContext> contexts, IServiceLocator serviceLocator);
         T GetContext<T>();
     }
 }

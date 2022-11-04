@@ -2,7 +2,7 @@
 
 namespace Services.Logger
 {
-    public interface ILogger
+    public interface ILogger : IService
     {
         void Log(string message);
         void Warn(string message);

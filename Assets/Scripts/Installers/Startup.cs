@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
 using Contexts;
 using Contexts.Impl;
+using Contexts.Impl.Project;
 using Installers.Impl;
-using Services.Logger.Impl;
+using Services.ServiceLocator.Impl;
 using UnityEngine;
 
 namespace Installers
@@ -16,27 +17,35 @@ namespace Installers
 
         private void Install()
         {
-            var logger = new ConsoleLogger();
+            var serviceLocator = new ServiceLocatorFactory().Create();
             
             var contextFactories = new List<IContextFactory>()
             {
-                new ProjectContextContextFactory(logger)
+                new ProjectContextFactory(serviceLocator),
+                new MenuContextFactory(serviceLocator)
             };
             
             var contexts = CreateContexts(contextFactories);
-
             var contextProviderObject = new GameObject();
+            contextProviderObject.name = nameof(ContextProvider);
             var contextProvider = contextProviderObject.AddComponent<ContextProvider>();
-            contextProvider.Initialize(contexts, logger);
+            contextProvider.Initialize(contexts, serviceLocator);
+
+            EnableProjectContext(contextProvider);
+        }
+
+        private void EnableProjectContext(IContextProvider contextProvider)
+        {
+            contextProvider.GetContext<ProjectContext>().IsActive = true;
         }
 
         private List<IContext> CreateContexts(List<IContextFactory> contextFactories)
         {
             var result = new List<IContext>();
 
-            foreach (var installer in contextFactories)
+            foreach (var factory in contextFactories)
             {
-                var context = installer.Create();
+                var context = factory.Create();
                 result.Add(context);
             }
 

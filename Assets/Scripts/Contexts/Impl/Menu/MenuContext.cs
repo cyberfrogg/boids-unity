@@ -3,9 +3,9 @@ using Services.LifeCycle.Factory;
 using Services.Logger;
 using Services.ServiceLocator;
 
-namespace Contexts.Impl.Project
+namespace Contexts.Impl.Menu
 {
-    public class ProjectContext : IContext
+    public class MenuContext : IContext
     {
         private readonly ILogger _logger;
         private readonly IServiceLocator _serviceLocator;
@@ -13,13 +13,13 @@ namespace Contexts.Impl.Project
 
         private bool _isActive;
 
-        public ProjectContext(ILogger logger, IServiceLocator serviceLocator)
+        public MenuContext(ILogger logger, IServiceLocator serviceLocator)
         {
             _logger = logger;
             _serviceLocator = serviceLocator;
             _lifeCycleFactoryService = _serviceLocator.GetService<ILifeCycleFactoryService>();
 
-            _logger.Log($"{nameof(ProjectContext)} Created!");
+            _logger.Log($"{nameof(MenuContext)} Created!");
 
             ContextLifeCycle = _lifeCycleFactoryService.Create();
         }

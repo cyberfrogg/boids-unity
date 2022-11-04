@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Exceptions;
+using Services.ServiceLocator;
 using UnityEngine;
 using ILogger = Services.Logger.ILogger;
 
@@ -8,20 +9,23 @@ namespace Contexts.Impl
     public class ContextProvider : MonoBehaviour, IContextProvider
     {
         private List<IContext> _contexts;
+        private IServiceLocator _serviceLocator;
         private ILogger _logger;
         
         private bool _isInitialized;
 
-        public void Initialize(List<IContext> contexts, ILogger logger)
+        public void Initialize(List<IContext> contexts, IServiceLocator serviceLocator)
         {
+            _serviceLocator = serviceLocator;
+            
             if(_isInitialized)
             {
-                logger.Warn($"{nameof(ContextProvider)} already Initialized!");
+                _logger.Warn($"{nameof(ContextProvider)} already Initialized!");
                 return;
             }
 
+            _logger = _serviceLocator.GetService<ILogger>();
             _contexts = contexts;
-            _logger = logger;
             _isInitialized = true;
         }
 
