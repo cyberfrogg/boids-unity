@@ -1,4 +1,5 @@
 ﻿using Contexts.LifeCycle;
+using Contexts.LifeCycle.Impl;
 using Services.LifeCycle.Factory;
 using Services.Logger;
 using Services.ServiceLocator;
@@ -31,8 +32,27 @@ namespace Contexts.Impl.Menu
             {
                 ContextLifeCycle.IsEnabled = value;
                 _isActive = value;
+
+                if (_isActive)
+                {
+                    OnEnable();
+                }
+                else
+                {
+                    OnDisable();
+                }
             }
         }
         public IContextLifeCycle ContextLifeCycle { get; }
+
+        private void OnEnable()
+        {
+            (ContextLifeCycle as DefaultContextLifeCycle)?.InvokeInitialize(this, _serviceLocator);
+        }
+
+        private void OnDisable()
+        {
+            
+        }
     }
 }

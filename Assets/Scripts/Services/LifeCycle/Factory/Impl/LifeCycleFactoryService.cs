@@ -12,6 +12,7 @@ namespace Services.LifeCycle.Factory.Impl
             instance.name = nameof(DefaultContextLifeCycle);
             var lc = instance.AddComponent<DefaultContextLifeCycle>();
             lc.IsEnabled = false;
+            lc.Initialize();
             return lc;
         }
     }

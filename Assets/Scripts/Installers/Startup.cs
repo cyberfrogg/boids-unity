@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Contexts;
 using Contexts.Impl;
+using Contexts.Impl.Menu;
 using Contexts.Impl.Project;
 using Installers.Impl;
 using Services.ServiceLocator.Impl;
@@ -32,11 +33,17 @@ namespace Installers
             contextProvider.Initialize(contexts, serviceLocator);
 
             EnableProjectContext(contextProvider);
+            EnableMenuContext(contextProvider);
         }
 
         private void EnableProjectContext(IContextProvider contextProvider)
         {
             contextProvider.GetContext<ProjectContext>().IsActive = true;
+        }
+        
+        private void EnableMenuContext(IContextProvider contextProvider)
+        {
+            contextProvider.GetContext<MenuContext>().IsActive = true;
         }
 
         private List<IContext> CreateContexts(List<IContextFactory> contextFactories)

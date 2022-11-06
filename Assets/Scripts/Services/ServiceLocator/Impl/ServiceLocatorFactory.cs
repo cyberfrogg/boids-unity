@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Services.LifeCycle.Factory.Impl;
 using Services.Logger.Impl;
+using Services.Utils.ControllerSpawner.Impl;
 
 namespace Services.ServiceLocator.Impl
 {
@@ -11,7 +12,8 @@ namespace Services.ServiceLocator.Impl
             var services = new List<IService>()
             {
                 new ConsoleLogger(),
-                new LifeCycleFactoryService()
+                new LifeCycleFactoryService(),
+                new ControllerSpawnerService()
             };
             
             return new ServiceLocator(services.AsReadOnly());

@@ -6,11 +6,18 @@ namespace Contexts.LifeCycle.Impl
 {
     public class DefaultContextLifeCycle : MonoBehaviour, IContextLifeCycle
     {
-        private readonly List<IInitializeListener> _initializeListeners;
-        private readonly List<IAwakeListener> _awakeListeners;
-        private readonly List<IUpdateListener> _updateListeners;
+        private List<IInitializeListener> _initializeListeners;
+        private List<IAwakeListener> _awakeListeners;
+        private List<IUpdateListener> _updateListeners;
 
         private bool _isEnabled;
+
+        public void Initialize()
+        {
+            _initializeListeners = new List<IInitializeListener>();
+            _awakeListeners = new List<IAwakeListener>();
+            _updateListeners = new List<IUpdateListener>();
+        }
 
         public void InvokeInitialize(IContext context, IServiceLocator serviceLocator)
         {

@@ -1,4 +1,6 @@
-﻿namespace Core.Scenes.Impl
+﻿using System;
+
+namespace Core.Scenes.Impl
 {
     public class Scene : IScene
     {
