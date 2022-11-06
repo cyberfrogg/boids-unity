@@ -54,9 +54,7 @@ namespace Contexts.Impl.Menu
             _world = new MenuWorld();
             _world.Install(this, _serviceLocator);
 
-            ContextLifeCycle.IsEnabled = true;
-            
-            (ContextLifeCycle as DefaultContextLifeCycle)?.InvokeInitialize(this, _serviceLocator);
+            SpinUpLifeCycle((DefaultContextLifeCycle)ContextLifeCycle);
         }
 
         private void OnDisable()
@@ -64,6 +62,13 @@ namespace Contexts.Impl.Menu
             _logger.Log($"Disable {nameof(MenuContext)}");
 
             ContextLifeCycle.IsEnabled = false;
+        }
+
+        private void SpinUpLifeCycle(DefaultContextLifeCycle lifeCycle)
+        {
+            lifeCycle.InvokeInitialize(this, _serviceLocator);
+            
+            lifeCycle.IsEnabled = true;
         }
     }
 }

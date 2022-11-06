@@ -26,7 +26,7 @@ namespace Services.ServiceLocator.Impl
                 new ConsoleLogger(),
                 settingsLocator,
                 new LifeCycleFactoryService(),
-                new ControllerSpawnerService(),
+                new ControllerSpawner(),
                 new SceneProvider(settingsLocator),
                 new SceneLoader()
             };

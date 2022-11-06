@@ -3,7 +3,6 @@
     public interface IContextLifeCycle
     {
         bool IsEnabled { get; set; }
-        void Initialize();
         void AddInitializeListener(IInitializeListener initializeListener);
         void RemoveInitializeListener(IInitializeListener initializeListener);
         void AddAwakeListener(IAwakeListener awakeListener);
