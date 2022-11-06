@@ -56,14 +56,14 @@ namespace Editor.Settings
                 EditorGUI.EndDisabledGroup();
                 GUILayout.BeginHorizontal();
                 GUILayout.FlexibleSpace();
-                if (GUILayout.Button("/\\", GUILayout.Width(20)))
-                {
-                    
-                }
-                if (GUILayout.Button("\\/", GUILayout.Width(20)))
-                {
-                    
-                }
+                // if (GUILayout.Button("/\\", GUILayout.Width(20)))
+                // {
+                //     
+                // }
+                // if (GUILayout.Button("\\/", GUILayout.Width(20)))
+                // {
+                //     
+                // }
                 GUILayout.Space(EditorGUIUtility.labelWidth);
                 GUILayout.Space(EditorGUIUtility.labelWidth);
                 if (GUILayout.Button("X", GUILayout.Width(20)))
@@ -86,9 +86,6 @@ namespace Editor.Settings
         {
             _scenesToDelete = new List<int>();
             _scenesToDelete.Add(index);
-                
-            
-
         }
 
         private void DeleteScenesFromQueue(SceneSettings target)
@@ -111,6 +108,7 @@ namespace Editor.Settings
             }
             
             target.Target = newList;
+            EditorUtility.SetDirty(target);
             Repaint();
         }
     }

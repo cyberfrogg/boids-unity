@@ -12,5 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 824df315db0346a1ae5575ef4db2d766, type: 3}
   m_Name: SceneSettings
   m_EditorClassIdentifier: 
-  SerializedValue: '[{"$type":"Core.Scenes.Impl.Scene, Assembly-CSharp","Index":0,"Name":"test1"},{"$type":"Core.Scenes.Impl.Scene,
-    Assembly-CSharp","Index":1,"Name":"test3"}]'
+  SerializedValue: '[]'
