@@ -8,17 +8,15 @@ namespace Installers.Impl
     public class ProjectContextFactory : IContextFactory
     {
         private readonly IServiceLocator _serviceLocator;
-        private readonly ILogger _logger;
 
         public ProjectContextFactory(IServiceLocator serviceLocator)
         {
             _serviceLocator = serviceLocator;
-            _logger = _serviceLocator.GetService<ILogger>();
         }
         
         public IContext Create()
         {
-            return new ProjectContext(_logger, _serviceLocator);
+            return new ProjectContext(_serviceLocator);
         }
     }
 }

@@ -3,6 +3,8 @@ using Contexts.LifeCycle.Impl;
 using Services.LifeCycle.Factory;
 using Services.Logger;
 using Services.ServiceLocator;
+using Worlds;
+using Worlds.Impl.Menu;
 
 namespace Contexts.Impl.Menu
 {
@@ -12,15 +14,14 @@ namespace Contexts.Impl.Menu
         private readonly IServiceLocator _serviceLocator;
         private readonly ILifeCycleFactoryService _lifeCycleFactoryService;
 
+        private MenuWorld _world;
         private bool _isActive;
 
-        public MenuContext(ILogger logger, IServiceLocator serviceLocator)
+        public MenuContext(IServiceLocator serviceLocator)
         {
-            _logger = logger;
+            _logger = serviceLocator.GetService<ILogger>();
             _serviceLocator = serviceLocator;
             _lifeCycleFactoryService = _serviceLocator.GetService<ILifeCycleFactoryService>();
-
-            _logger.Log($"{nameof(MenuContext)} Created!");
 
             ContextLifeCycle = _lifeCycleFactoryService.Create();
         }
@@ -44,15 +45,25 @@ namespace Contexts.Impl.Menu
             }
         }
         public IContextLifeCycle ContextLifeCycle { get; }
+        public IWorld World => _world;
 
         private void OnEnable()
         {
+            _logger.Log($"Enabled {nameof(MenuContext)}");
+
+            _world = new MenuWorld();
+            _world.Install(this, _serviceLocator);
+
+            ContextLifeCycle.IsEnabled = true;
+            
             (ContextLifeCycle as DefaultContextLifeCycle)?.InvokeInitialize(this, _serviceLocator);
         }
 
         private void OnDisable()
         {
-            
+            _logger.Log($"Disable {nameof(MenuContext)}");
+
+            ContextLifeCycle.IsEnabled = false;
         }
     }
 }

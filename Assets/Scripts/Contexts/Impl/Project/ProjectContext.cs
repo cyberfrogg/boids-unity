@@ -3,6 +3,7 @@ using Contexts.LifeCycle.Impl;
 using Services.LifeCycle.Factory;
 using Services.Logger;
 using Services.ServiceLocator;
+using Worlds;
 
 namespace Contexts.Impl.Project
 {
@@ -14,13 +15,11 @@ namespace Contexts.Impl.Project
 
         private bool _isActive;
 
-        public ProjectContext(ILogger logger, IServiceLocator serviceLocator)
+        public ProjectContext(IServiceLocator serviceLocator)
         {
-            _logger = logger;
+            _logger = serviceLocator.GetService<ILogger>();
             _serviceLocator = serviceLocator;
             _lifeCycleFactoryService = _serviceLocator.GetService<ILifeCycleFactoryService>();
-
-            _logger.Log($"{nameof(ProjectContext)} Created!");
 
             ContextLifeCycle = _lifeCycleFactoryService.Create();
         }
@@ -44,15 +43,18 @@ namespace Contexts.Impl.Project
             }
         }
         public IContextLifeCycle ContextLifeCycle { get; }
+        public IWorld World => null;
 
         private void OnEnable()
         {
+            _logger.Log($"Enabled {nameof(ProjectContext)}");
+            
             (ContextLifeCycle as DefaultContextLifeCycle)?.InvokeInitialize(this, _serviceLocator);
         }
 
         private void OnDisable()
         {
-            
+            _logger.Log($"Disable {nameof(ProjectContext)}");
         }
     }
 }

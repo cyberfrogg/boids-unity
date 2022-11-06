@@ -1,4 +1,5 @@
 ﻿using Contexts.LifeCycle;
+using Worlds;
 
 namespace Contexts
 {
@@ -6,5 +7,6 @@ namespace Contexts
     {
         bool IsActive { get; set; }
         IContextLifeCycle ContextLifeCycle { get; }   
+        IWorld World { get; }
     }
 }

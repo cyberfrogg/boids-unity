@@ -11,6 +11,8 @@ namespace Installers
 {
     public class Startup : MonoBehaviour
     {
+        [SerializeField] private SettingsContainer _settingsContainer;
+        
         private void Awake()
         {
             Install();
@@ -18,7 +20,7 @@ namespace Installers
 
         private void Install()
         {
-            var serviceLocator = new ServiceLocatorFactory().Create();
+            var serviceLocator = new ServiceLocatorFactory(_settingsContainer.GetSettings()).Create();
             
             var contextFactories = new List<IContextFactory>()
             {
@@ -31,6 +33,8 @@ namespace Installers
             contextProviderObject.name = nameof(ContextProvider);
             var contextProvider = contextProviderObject.AddComponent<ContextProvider>();
             contextProvider.Initialize(contexts, serviceLocator);
+            
+            DontDestroyOnLoad(contextProviderObject);
 
             EnableProjectContext(contextProvider);
             EnableMenuContext(contextProvider);
