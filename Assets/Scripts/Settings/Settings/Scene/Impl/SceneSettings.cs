@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 using Services.Scenes;
 using UnityEngine;
 
-namespace Settings.Settings.Impl
+namespace Settings.Settings.Scene.Impl
 {
     [CreateAssetMenu(menuName = "Settings/" + nameof(SceneSettings), fileName = nameof(SceneSettings))]
     public class SceneSettings : ScriptableObject, ISceneSettings, ISerializationCallbackReceiver

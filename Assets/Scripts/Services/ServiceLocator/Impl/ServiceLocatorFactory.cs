@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
-using Services.Controllers.ControllerSpawner.Impl;
+using Services.Controllers.Linker.Impl;
+using Services.Controllers.Spawner.Impl;
 using Services.LifeCycle.Factory.Impl;
 using Services.Logger.Impl;
 using Services.Scenes.SceneLoader.Impl;
@@ -21,12 +22,17 @@ namespace Services.ServiceLocator.Impl
         public IServiceLocator Create()
         {
             var settingsLocator = new SettingsLocator(_settings);
+
+            var controllerLinker = new ControllerLinker();
+            
             var services = new List<IService>()
             {
                 new ConsoleLogger(),
                 settingsLocator,
                 new LifeCycleFactoryService(),
-                new ControllerSpawner(),
+                controllerLinker,
+                new ControllerPrefabSpawner(settingsLocator, controllerLinker),
+                new ControllerSpawner(controllerLinker),
                 new SceneProvider(settingsLocator),
                 new SceneLoader()
             };

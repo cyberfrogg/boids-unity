@@ -1,6 +1,6 @@
 ﻿using Worlds.Abstracts;
 
-namespace Services.Controllers.ControllerSpawner
+namespace Services.Controllers.Spawner
 {
     public interface IControllerSpawner : IService
     {

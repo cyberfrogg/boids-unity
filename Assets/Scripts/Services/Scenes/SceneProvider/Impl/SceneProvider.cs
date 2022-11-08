@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using Settings.Settings;
+using Settings.Settings.Scene;
 using Settings.SettingsLocator;
 
 namespace Services.Scenes.SceneProvider.Impl

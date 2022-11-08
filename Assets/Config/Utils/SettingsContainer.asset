@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: SettingsContainer
   m_EditorClassIdentifier: 
   _sceneSettings: {fileID: 11400000, guid: 9eaeff8b06da63a44aa8cd8a37a6db19, type: 2}
+  _prefabSettings: {fileID: 11400000, guid: dfb3be6039305cd4b84dd6de31045b8b, type: 2}

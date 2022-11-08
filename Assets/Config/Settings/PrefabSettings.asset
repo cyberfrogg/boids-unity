@@ -9,7 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 824df315db0346a1ae5575ef4db2d766, type: 3}
-  m_Name: SceneSettings
+  m_Script: {fileID: 11500000, guid: 4e28aa7d2f064ed8b42b42663fd93ef2, type: 3}
+  m_Name: PrefabSettings
   m_EditorClassIdentifier: 
-  SerializedValue: '[]'
+  _items:
+  - Name: MenuSelectorItem
+    GameObject: {fileID: 5503933303581952776, guid: 67b314a7af01bb04f92544e761296e24, type: 3}

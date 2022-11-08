@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Services.Scenes;
 using Services.Scenes.Impl;
-using Settings.Settings.Impl;
+using Settings.Settings.Scene.Impl;
 using UnityEditor;
 using UnityEngine;
 

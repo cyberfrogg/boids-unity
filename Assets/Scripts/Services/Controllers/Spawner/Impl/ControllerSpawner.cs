@@ -1,10 +1,17 @@
-﻿using UnityEngine;
+﻿using Services.Controllers.Linker;
+using UnityEngine;
 using Worlds.Abstracts;
 
-namespace Services.Controllers.ControllerSpawner.Impl
+namespace Services.Controllers.Spawner.Impl
 {
     public class ControllerSpawner : IControllerSpawner
     {
+        private readonly IControllerLinker _controllerLinker;
+
+        public ControllerSpawner(IControllerLinker controllerLinker)
+        {
+            _controllerLinker = controllerLinker;
+        }
         
         public TC Spawn<TC, TV>(IModel model)
             where TC : IController, new()
@@ -13,13 +20,15 @@ namespace Services.Controllers.ControllerSpawner.Impl
             var go = new GameObject();
             
             var viewType = typeof(TV);
-            go.name = nameof(viewType);
+            go.name = viewType.Name;
 
             var viewInstance = go.AddComponent(viewType);
-
             var controllerInstance = new TC();
-            controllerInstance.View = (IView)viewInstance;
+
             controllerInstance.Model = model; 
+            
+            _controllerLinker.Link(controllerInstance, (IView)viewInstance);
+            
             return controllerInstance;
         }
     }

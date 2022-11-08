@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Services.Scenes;
 
-namespace Settings.Settings
+namespace Settings.Settings.Scene
 {
     public interface ISceneSettings : ISettings
     {
