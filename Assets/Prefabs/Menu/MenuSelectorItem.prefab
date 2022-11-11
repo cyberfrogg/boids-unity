@@ -219,6 +219,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _titleText: {fileID: 6653525632532355944}
+  _width: 2.2
 --- !u!1 &5503933303954981435
 GameObject:
   m_ObjectHideFlags: 0

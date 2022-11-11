@@ -21,6 +21,7 @@ namespace Worlds.Impl.Menu.Controllers.Selector
         private void OnModelChanged(IModel model)
         {
             _view.Title = _model.Title;
+            _view.Position = _model.Position;
         }
 
         public IModel Model

@@ -17,7 +17,7 @@ namespace Services.Controllers.Spawner.Impl
             _prefabSettings = settingsLocator.GetSettings<IPrefabSettings>();
         }
 
-        public T SpawnPrefab<T>(string viewName, IModel model) where T : IController, new()
+        public T SpawnPrefab<T>(string viewName, IModel model = null) where T : IController, new()
         {
             var prefab = _prefabSettings.GetPrefab(viewName);
 

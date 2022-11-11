@@ -1,7 +1,9 @@
-﻿using Contexts;
+﻿using System.Linq;
+using Contexts;
 using Contexts.LifeCycle;
 using Services.Input;
 using Services.ServiceLocator;
+using UnityEngine;
 using Worlds.Abstracts;
 using Worlds.Impl.Menu.Models.Selector;
 using Worlds.Impl.Menu.Views.Selector;
@@ -20,6 +22,8 @@ namespace Worlds.Impl.Menu.Controllers.Selector
             _model.Changed += OnModelChanged;
 
             _inputService = serviceLocator.GetService<IInputService>();
+
+            PositionItems();
         }
         
         public void Update()
@@ -29,10 +33,10 @@ namespace Worlds.Impl.Menu.Controllers.Selector
             switch (horizontalAxis)
             {
                 case < 0:
-                    _model.LevelSelected--;
+                    _model.LevelSelected = ClampLevel(_model.LevelSelected - 1);
                     break;
                 case > 0:
-                    _model.LevelSelected++;
+                    _model.LevelSelected = ClampLevel(_model.LevelSelected + 1);
                     break;
             }
         }
@@ -52,6 +56,20 @@ namespace Worlds.Impl.Menu.Controllers.Selector
         private void OnModelChanged(IModel model)
         {
             _view.OnSelectedLevelIndexChanged(_model.LevelSelected);
+        }
+
+        private int ClampLevel(int index)
+        {
+            return Mathf.Clamp(index, 0, _model.Items.Count - 1);
+        }
+
+        private void PositionItems()
+        {
+            for (var i = 0; i < _model.Items.Count; i++)
+            {
+                var item = _model.Items.ElementAt(i);
+                item.Position = new Vector3(i * item.Width, 0, 0);
+            }
         }
     }
 }

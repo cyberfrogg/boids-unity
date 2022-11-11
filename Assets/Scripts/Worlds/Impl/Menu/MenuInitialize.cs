@@ -59,8 +59,9 @@ namespace Worlds.Impl.Menu
             var menuSelectorItems = new List<MenuSelectorItemModel>();
             foreach (var itemSetting in _menuSelectorSettings.Items)
             {
-                var itemModel = new MenuSelectorItemModel(itemSetting.Title, itemSetting.SceneName);
-                var selectorItemController = _controllerPrefabSpawner.SpawnPrefab<MenuSelectorItemController>("MenuSelectorItem", itemModel);
+                var selectorItemController = _controllerPrefabSpawner.SpawnPrefab<MenuSelectorItemController>("MenuSelectorItem");
+                var itemModel = new MenuSelectorItemModel(itemSetting.Title, itemSetting.SceneName, ((MenuSelectorItemView)selectorItemController.View).Width);
+                selectorItemController.Model = itemModel;
                 selectorItemController.Initialize(_context, _serviceLocator);
                 
                 menuSelectorItems.Add(itemModel);
