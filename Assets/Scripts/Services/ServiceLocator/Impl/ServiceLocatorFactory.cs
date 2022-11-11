@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Services.Controllers.Linker.Impl;
 using Services.Controllers.Spawner.Impl;
+using Services.Input.Impl;
 using Services.LifeCycle.Factory.Impl;
 using Services.Logger.Impl;
 using Services.Scenes.SceneLoader.Impl;
@@ -34,7 +35,8 @@ namespace Services.ServiceLocator.Impl
                 new ControllerPrefabSpawner(settingsLocator, controllerLinker),
                 new ControllerSpawner(controllerLinker),
                 new SceneProvider(settingsLocator),
-                new SceneLoader()
+                new SceneLoader(),
+                new InputService()
             };
             
             return new ServiceLocator(services.AsReadOnly());
