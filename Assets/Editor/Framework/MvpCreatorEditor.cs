@@ -29,6 +29,14 @@ namespace Editor.Framework
             
             rootVisualElement.Clear();
             _visualTreeAsset.CloneTree(rootVisualElement);
+
+            RefreshUnitsList();
+
+            var createUnitButton = rootVisualElement.Query<Button>(name:"button_createunit").First();
+            createUnitButton.clickable.clicked += OnAddUnitButtonClick;
+            
+            var createFieldUnitButton = rootVisualElement.Query<Button>(name:"button_addunitfield").First();
+            createFieldUnitButton.clickable.clicked += OnAddFieldToCurrentUnitClick;
         }
 
         private void OnFocus()
@@ -36,11 +44,80 @@ namespace Editor.Framework
             RefreshUnitsList();
         }
 
+
+        private void OnAddUnitButtonClick()
+        {
+            var newUnitName = rootVisualElement.Query<TextField>(name:"newunitname").First().value;
+            var newUnitWorldName = rootVisualElement.Query<TextField>(name:"newunitworld").First().value;
+            newUnitName = newUnitName.Replace(" ", "");
+            newUnitWorldName = newUnitWorldName.Replace(" ", "");
+            
+            if(newUnitName == "" || newUnitWorldName == "")
+                return;
+
+            var newUnitSettings = new NewUnitSettings()
+            {
+                Name = newUnitName,
+                Fields = new List<NewUnitSettingsField>()
+            };
+
+            var fieldElements = rootVisualElement.Query<GroupBox>(name: "field").ToList();
+            foreach (var fieldElement in fieldElements)
+            {
+                var fieldNewName = fieldElement.Query<TextField>(name:"field_name").First().value.Replace(" ", "");
+                var fieldNewType = fieldElement.Query<DropdownField>(name:"field_type").First().value;
+                
+                if(fieldNewName == "")
+                    continue;
+
+                var newFieldItem = new NewUnitSettingsField()
+                {
+                    Name = fieldNewName,
+                    Type = fieldNewType
+                };
+                newUnitSettings.Fields.Add(newFieldItem);
+            }
+
+            Debug.Log($"Creating unit: {newUnitName} | Fields count: {fieldElements.Count}");
+
+            var modelName = $"{newUnitName}Model.cs";
+            var viewName = $"{newUnitName}View.cs";
+            var controllerName = $"{newUnitName}Controller.cs";
+            var modelPath = Path.Join(Path.Join(_pathToWorlds, newUnitWorldName), "Models", modelName);
+            var viewPath = Path.Join(Path.Join(_pathToWorlds, newUnitWorldName), "Views", viewName);
+            var controllerPath = Path.Join(Path.Join(_pathToWorlds, newUnitWorldName), "Controllers", controllerName);
+
+            Directory.CreateDirectory(new FileInfo(modelPath).Directory.FullName);
+            Directory.CreateDirectory(new FileInfo(viewPath).Directory.FullName);
+            Directory.CreateDirectory(new FileInfo(controllerPath).Directory.FullName);
+            
+            var modelContent = "text model";
+            var viewContent = "text view";
+            var controllerContent = "text controller";
+            
+            File.WriteAllText(Path.Join(Application.dataPath, modelPath.Substring(modelPath.IndexOf("/"))), modelContent);
+            File.WriteAllText(Path.Join(Application.dataPath, viewPath.Substring(viewPath.IndexOf("/"))), viewContent);
+            File.WriteAllText(Path.Join(Application.dataPath, controllerPath.Substring(controllerPath.IndexOf("/"))), controllerContent);
+            
+            AssetDatabase.Refresh();
+        }
+
+        private void OnAddFieldToCurrentUnitClick()
+        {
+            var fieldParent = rootVisualElement.Query<GroupBox>(name:"fields").First();
+            
+            CreateUnitFieldElement(fieldParent);
+        }
+        
+
         private void RefreshUnitsList()
         {
             SetupAllClassTypes();
             
             var unitslist = rootVisualElement.Query<ScrollView>(name: "unitslist").First();
+            if(unitslist == null)
+                return;
+            
             unitslist.Clear();
             
             DrawUnitsListRecursive(_pathToWorlds, 1, unitslist);
@@ -124,6 +201,55 @@ namespace Editor.Framework
                 );
 
             _allClassTypes = allAssemblies.SelectMany(assembly => assembly.GetTypes());
+        }
+
+        private void CreateUnitFieldElement(VisualElement parent)
+        {
+            var fieldContainer = new GroupBox();
+            fieldContainer.style.display = DisplayStyle.Flex;
+            fieldContainer.style.flexDirection = FlexDirection.Row;
+            fieldContainer.name = "field";
+            parent.Add(fieldContainer);
+            
+            var fieldNameTextField = new TextField();
+            fieldNameTextField.name = "field_name";
+            fieldNameTextField.style.width = 200;
+            fieldContainer.Add(fieldNameTextField);
+            
+            var fieldTypeDropdown = new DropdownField(ConvertUnitFieldObjectEnumToString(), 0);
+            fieldTypeDropdown.style.width = 100;
+            fieldTypeDropdown.name = "field_type";
+            fieldContainer.Add(fieldTypeDropdown);
+            
+            var closeButton = new Button();
+            closeButton.text = "x";
+            closeButton.style.width = 10;
+            fieldContainer.Add(closeButton);
+        }
+
+        private List<string> ConvertUnitFieldObjectEnumToString()
+        {
+            return Enum.GetNames(typeof(EUnitFieldObjectType)).ToList();
+        }
+        
+        public enum EUnitFieldObjectType
+        {
+            Object,
+            String,
+            Int,
+            Float
+        }
+
+        public class NewUnitSettings
+        {
+            public string Name;
+            public List<NewUnitSettingsField> Fields;
+        }
+        
+        public class NewUnitSettingsField
+        {
+            public string Name;
+            public string Type;
         }
     }
 }

@@ -1,4 +1,11 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
     <ui:Label text="MVC Units:" display-tooltip-when-elided="true" name="Label_MvcUnits" style="height: 35px; -unity-text-align: middle-center; -unity-font-style: bold;" />
     <ui:ScrollView name="unitslist" style="max-height: 500px; height: 500px;" />
+    <ui:GroupBox name="createnewunitgroup">
+        <ui:GroupBox name="fields" style="flex-direction: column; flex-wrap: nowrap; flex-basis: auto;" />
+        <ui:TextField picking-mode="Ignore" label="New unit Name" name="newunitname" />
+        <ui:TextField picking-mode="Ignore" label="New unit World" name="newunitworld" />
+        <ui:Button text="+" display-tooltip-when-elided="true" name="button_addunitfield" />
+        <ui:Button text="Create new" display-tooltip-when-elided="true" name="button_createunit" />
+    </ui:GroupBox>
 </ui:UXML>
