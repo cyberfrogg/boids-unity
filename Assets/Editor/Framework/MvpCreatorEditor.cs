@@ -91,9 +91,9 @@ namespace Editor.Framework
             Directory.CreateDirectory(new FileInfo(viewPath).Directory.FullName);
             Directory.CreateDirectory(new FileInfo(controllerPath).Directory.FullName);
             
-            var modelContent = "text model";
-            var viewContent = "text view";
-            var controllerContent = "text controller";
+            var modelContent = "";
+            var viewContent = "";
+            var controllerContent = "";
             
             File.WriteAllText(Path.Join(Application.dataPath, modelPath.Substring(modelPath.IndexOf("/"))), modelContent);
             File.WriteAllText(Path.Join(Application.dataPath, viewPath.Substring(viewPath.IndexOf("/"))), viewContent);
