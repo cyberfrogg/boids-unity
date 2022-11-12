@@ -19,8 +19,6 @@ namespace Worlds.Impl.Menu.Controllers.Selector
         
         public void Initialize(IContext context, IServiceLocator serviceLocator)
         {
-            _model.Changed += OnModelChanged;
-
             _inputService = serviceLocator.GetService<IInputService>();
 
             PositionItems();
@@ -51,11 +49,6 @@ namespace Worlds.Impl.Menu.Controllers.Selector
         {
             get => _view;
             set => _view = (MenuSelectorView)value;
-        }
-
-        private void OnModelChanged(IModel model)
-        {
-            _view.OnSelectedLevelIndexChanged(_model.LevelSelected);
         }
 
         private int ClampLevel(int index)

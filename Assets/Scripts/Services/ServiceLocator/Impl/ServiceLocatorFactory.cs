@@ -24,6 +24,7 @@ namespace Services.ServiceLocator.Impl
         {
             var settingsLocator = new SettingsLocator(_settings);
 
+            var uidGenerator = new UidGenerator.Impl.UidGenerator();
             var controllerLinker = new ControllerLinker();
             
             var services = new List<IService>()
@@ -31,9 +32,10 @@ namespace Services.ServiceLocator.Impl
                 new ConsoleLogger(),
                 settingsLocator,
                 new LifeCycleFactoryService(),
+                uidGenerator,
                 controllerLinker,
-                new ControllerPrefabSpawner(settingsLocator, controllerLinker),
-                new ControllerSpawner(controllerLinker),
+                new ControllerPrefabSpawner(settingsLocator, controllerLinker, uidGenerator),
+                new ControllerSpawner(controllerLinker, uidGenerator),
                 new SceneProvider(settingsLocator),
                 new SceneLoader(),
                 new InputService()

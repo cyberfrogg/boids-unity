@@ -4,7 +4,7 @@ using Worlds.Abstracts;
 
 namespace Worlds.Impl.Menu.Views.Selector
 {
-    public class MenuSelectorItemView : MonoBehaviour, IView
+    public class MenuSelectorItemView : AGameObjectView
     {
         [SerializeField] private TextMeshPro _titleText;
         [SerializeField] private float _width;

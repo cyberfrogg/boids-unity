@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Worlds.Abstracts;
 
 namespace Worlds.Impl.Menu.Models.Selector
 {
-    public class MenuSelectorModel : IModel
+    public class MenuSelectorModel : AModel
     {
-        public event Action<IModel> Changed;
-        
         private int _levelSelected;
         private IReadOnlyCollection<MenuSelectorItemModel> _items;
 
@@ -23,7 +20,7 @@ namespace Worlds.Impl.Menu.Models.Selector
             set
             {
                 _levelSelected = value;
-                Changed?.Invoke(this);
+                InvokeChanged();
             }
         }
 
@@ -33,7 +30,7 @@ namespace Worlds.Impl.Menu.Models.Selector
             set
             {
                 _items = value;
-                Changed?.Invoke(this);
+                InvokeChanged();
             }
         }
     }

@@ -1,13 +1,10 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using Worlds.Abstracts;
 
 namespace Worlds.Impl.Menu.Models.Selector
 {
-    public class MenuSelectorItemModel : IModel
+    public class MenuSelectorItemModel : AGameObjectModel
     {
-        public event Action<IModel> Changed;
-
         private string _title;
         private string _sceneName;
         private float _width;
@@ -26,7 +23,7 @@ namespace Worlds.Impl.Menu.Models.Selector
             set
             {
                 _title = value;
-                Changed?.Invoke(this);
+                InvokeChanged();
             }
         }
         
@@ -36,7 +33,7 @@ namespace Worlds.Impl.Menu.Models.Selector
             set
             {
                 _sceneName = value;
-                Changed?.Invoke(this);
+                InvokeChanged();
             }
         }
 
@@ -46,17 +43,7 @@ namespace Worlds.Impl.Menu.Models.Selector
             set
             {
                 _width = value;
-                Changed?.Invoke(this);
-            }
-        }
-
-        public Vector3 Position
-        {
-            get => _position;
-            set
-            {
-                _position = value;
-                Changed?.Invoke(this);
+                InvokeChanged();
             }
         }
     }
