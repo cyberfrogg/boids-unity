@@ -1,4 +1,5 @@
-﻿using Services.Controllers.Linker;
+﻿using Contexts;
+using Services.Controllers.Linker;
 using Services.UidGenerator;
 using UnityEngine;
 using Worlds.Abstracts;
@@ -16,7 +17,7 @@ namespace Services.Controllers.Spawner.Impl
             _uidGenerator = uidGenerator;
         }
         
-        public TC Spawn<TC, TV>(IModel model)
+        public TC Spawn<TC, TV>(IContext context, IModel model)
             where TC : IController, new()
             where TV : IView, new()
         {
@@ -39,12 +40,16 @@ namespace Services.Controllers.Spawner.Impl
                 viewInstance = new TV();
             }
             
+            if(viewInstance != null)
+                viewInstance.Uid = uid;
+            
             if(model != null)
                 model.Uid = uid;
             
             controllerInstance.Model = model; 
             
-            _controllerLinker.Link(controllerInstance, viewInstance);
+            controllerInstance.Initialize(context);
+            _controllerLinker.Link(context, controllerInstance, viewInstance);
             
             return controllerInstance;
         }

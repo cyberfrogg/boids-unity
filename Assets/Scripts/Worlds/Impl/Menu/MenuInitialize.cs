@@ -12,6 +12,8 @@ using Settings.SettingsLocator;
 using Worlds.Impl.Menu.Controllers.Selector;
 using Worlds.Impl.Menu.Models.Selector;
 using Worlds.Impl.Menu.Views.Selector;
+using Worlds.Impl.Shared.Controllers.Camera.Impl;
+using Worlds.Impl.Shared.Models.Camera.Impl;
 
 namespace Worlds.Impl.Menu
 {
@@ -56,23 +58,37 @@ namespace Worlds.Impl.Menu
 
         private void OnMenuSceneLoaded(IScene scene)
         {
+            CreateCamera();
+            
+            CreateMenuSelector();
+        }
+
+        private void CreateCamera()
+        {
+            _controllerPrefabSpawner.SpawnPrefab<CameraController>(_context, "MenuCamera", new CameraModel());
+        }
+        
+        private void CreateMenuSelector()
+        {
+            var menuSelectorModel = new MenuSelectorModel(0, CreateMenuSelectorItems());
+            
+            var menuSelectorController = _controllerSpawner.Spawn<MenuSelectorController, MenuSelectorView>(_context, menuSelectorModel);
+            _context.ContextLifeCycle.AddUpdateListener(menuSelectorController);
+        }
+        
+        private IReadOnlyCollection<MenuSelectorItemModel> CreateMenuSelectorItems()
+        {
+            // from prefabs
             var menuSelectorItems = new List<MenuSelectorItemModel>();
             foreach (var itemSetting in _menuSelectorSettings.Items)
             {
-                var selectorItemController = _controllerPrefabSpawner.SpawnPrefab<MenuSelectorItemController>("MenuSelectorItem");
-                var itemModel = new MenuSelectorItemModel(itemSetting.Title, itemSetting.SceneName, ((MenuSelectorItemView)selectorItemController.View).Width);
-                selectorItemController.Model = itemModel;
-                selectorItemController.Initialize(_context, _serviceLocator);
+                var itemModel = new MenuSelectorItemModel(itemSetting.Title, itemSetting.SceneName);
+                _controllerPrefabSpawner.SpawnPrefab<MenuSelectorItemController>(_context, "MenuSelectorItem", itemModel);
                 
                 menuSelectorItems.Add(itemModel);
             }
-            var menuSelectorModel = new MenuSelectorModel(0, menuSelectorItems);
-            
-            // from empty object
-            var menuSelectorController = _controllerSpawner.Spawn<MenuSelectorController, MenuSelectorView>(menuSelectorModel);
-            menuSelectorController.Initialize(_context, _serviceLocator);               //life cycle
-            _context.ContextLifeCycle.AddUpdateListener(menuSelectorController);        //life cycle
-            
+
+            return menuSelectorItems;
         }
     }
 }

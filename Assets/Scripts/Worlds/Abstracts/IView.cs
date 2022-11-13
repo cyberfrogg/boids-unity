@@ -2,6 +2,6 @@
 {
     public interface IView
     {
-        
+        int Uid { get; set; }
     }
 }

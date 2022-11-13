@@ -1,4 +1,5 @@
-﻿using Services.Controllers.Linker;
+﻿using Contexts;
+using Services.Controllers.Linker;
 using Services.UidGenerator;
 using Settings.Settings.Prefab;
 using Settings.SettingsLocator;
@@ -20,7 +21,7 @@ namespace Services.Controllers.Spawner.Impl
             _prefabSettings = settingsLocator.GetSettings<IPrefabSettings>();
         }
 
-        public T SpawnPrefab<T>(string viewName, IModel model = null) where T : IController, new()
+        public T SpawnPrefab<T>(IContext context, string viewName, IModel model) where T : IController, new()
         {
             var uid = _uidGenerator.Next();
             
@@ -28,7 +29,9 @@ namespace Services.Controllers.Spawner.Impl
 
             var instance = Object.Instantiate(prefab);
             var view = instance.GetComponent<AGameObjectView>();
-            view.InitializeGoView(uid);
+            
+            if(view != null)
+                view.Uid = uid;
             
             if(model != null)
                 model.Uid = uid;
@@ -39,7 +42,8 @@ namespace Services.Controllers.Spawner.Impl
                 Model = model
             };
 
-            _controllerLinker.Link(controllerInstance, view);
+            controllerInstance.Initialize(context);
+            _controllerLinker.Link(context, controllerInstance, view);
             
             return controllerInstance;
         }

@@ -44,6 +44,8 @@ namespace Contexts.Impl.Menu
                 }
             }
         }
+
+        public IServiceLocator ServiceLocator => _serviceLocator;
         public IContextLifeCycle ContextLifeCycle { get; }
         public IWorld World => _world;
 

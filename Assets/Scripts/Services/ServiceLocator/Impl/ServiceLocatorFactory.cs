@@ -4,6 +4,7 @@ using Services.Controllers.Spawner.Impl;
 using Services.Input.Impl;
 using Services.LifeCycle.Factory.Impl;
 using Services.Logger.Impl;
+using Services.Raycast.Impl;
 using Services.Scenes.SceneLoader.Impl;
 using Services.Scenes.SceneProvider.Impl;
 using Settings;
@@ -38,7 +39,8 @@ namespace Services.ServiceLocator.Impl
                 new ControllerSpawner(controllerLinker, uidGenerator),
                 new SceneProvider(settingsLocator),
                 new SceneLoader(),
-                new InputService()
+                new InputService(),
+                new RayCastService()
             };
             
             return new ServiceLocator(services.AsReadOnly());

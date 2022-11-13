@@ -1,5 +1,6 @@
 ﻿using Contexts;
 using Services.ServiceLocator;
+using Worlds.Bundle;
 
 namespace Worlds
 {
@@ -7,6 +8,7 @@ namespace Worlds
     {
         string Name { get; }
         void Install(IContext context, IServiceLocator serviceLocator);
+        IWorldBundleCollection BundleCollection { get; }
         void Destroy();
     }
 }

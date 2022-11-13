@@ -15,3 +15,5 @@ MonoBehaviour:
   _items:
   - Name: MenuSelectorItem
     GameObject: {fileID: 5503933303581952776, guid: 67b314a7af01bb04f92544e761296e24, type: 3}
+  - Name: MenuCamera
+    GameObject: {fileID: 3563124000943114315, guid: 39477b806be351546be9d309cc3094a1, type: 3}

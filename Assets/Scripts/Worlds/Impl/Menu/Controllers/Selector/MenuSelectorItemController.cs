@@ -1,18 +1,16 @@
 ﻿using Contexts;
-using Contexts.LifeCycle;
-using Services.ServiceLocator;
 using Worlds.Abstracts;
 using Worlds.Impl.Menu.Models.Selector;
 using Worlds.Impl.Menu.Views.Selector;
 
 namespace Worlds.Impl.Menu.Controllers.Selector
 {
-    public class MenuSelectorItemController : IController, IInitializeListener
+    public class MenuSelectorItemController : IController
     {
         private MenuSelectorItemModel _model;
         private MenuSelectorItemView _view;
         
-        public void Initialize(IContext context, IServiceLocator serviceLocator)
+        public void Initialize(IContext context)
         {
             OnModelChanged(Model);
             _model.Changed += OnModelChanged;

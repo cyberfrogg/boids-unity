@@ -4,11 +4,13 @@ namespace Worlds.Abstracts
 {
     public abstract class AGameObjectView : MonoBehaviour, IView
     {
-        public int Uid { get; private set; }
+        public int Uid { get; set; }
 
-        public void InitializeGoView(int uid)
+        public void InitializeGameObjectModel(AGameObjectModel model)
         {
-            Uid = uid;
+            model.Position = transform.position;
+            model.Rotation = transform.rotation;
+            model.Scale = transform.localScale;
         }
 
         public void OnPositionChanged(Vector3 position)

@@ -42,6 +42,8 @@ namespace Contexts.Impl.Project
                 }
             }
         }
+
+        public IServiceLocator ServiceLocator => _serviceLocator;
         public IContextLifeCycle ContextLifeCycle { get; }
         public IWorld World => null;
 

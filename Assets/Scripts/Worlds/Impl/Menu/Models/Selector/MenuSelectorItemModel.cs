@@ -10,7 +10,7 @@ namespace Worlds.Impl.Menu.Models.Selector
         private float _width;
         private Vector3 _position;
         
-        public MenuSelectorItemModel(string title, string sceneName, float width)
+        public MenuSelectorItemModel(string title, string sceneName, float width = 2f)
         {
             _title = title;
             _sceneName = sceneName;
