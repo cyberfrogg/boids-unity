@@ -51,7 +51,7 @@ namespace Contexts.Impl.Project
         {
             _logger.Log($"Enabled {nameof(ProjectContext)}");
             
-            (ContextLifeCycle as DefaultContextLifeCycle)?.InvokeInitialize(this, _serviceLocator);
+            (ContextLifeCycle as DefaultContextLifeCycle)?.InvokeInitialize(this);
         }
 
         private void OnDisable()

@@ -21,7 +21,7 @@ namespace Worlds.Impl.Game
             _context.ContextLifeCycle.AddInitializeListener(this);
         }
         
-        public void Initialize(IContext context, IServiceLocator serviceLocator)
+        public void Initialize(IContext context)
         {
             _logger.Log($"{nameof(GameInitialize)} Initialized!");
         }

@@ -45,7 +45,7 @@ namespace Worlds.Impl.Menu
             _context.ContextLifeCycle.AddInitializeListener(this);
         }
         
-        public void Initialize(IContext context, IServiceLocator serviceLocator)
+        public void Initialize(IContext context)
         {
             LoadScene();
         }

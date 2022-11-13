@@ -68,7 +68,7 @@ namespace Contexts.Impl.Menu
 
         private void SpinUpLifeCycle(DefaultContextLifeCycle lifeCycle)
         {
-            lifeCycle.InvokeInitialize(this, _serviceLocator);
+            lifeCycle.InvokeInitialize(this);
             
             lifeCycle.IsEnabled = true;
         }

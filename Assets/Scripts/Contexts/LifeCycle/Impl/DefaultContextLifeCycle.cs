@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Services.ServiceLocator;
 using UnityEngine;
 using UnityEngine.LowLevel;
 
@@ -35,11 +34,11 @@ namespace Contexts.LifeCycle.Impl
         }
 
 
-        public void InvokeInitialize(IContext context, IServiceLocator serviceLocator)
+        public void InvokeInitialize(IContext context)
         {
             for (var i = 0; i < _initializeListeners.Count; i++)
             {
-                _initializeListeners[i].Initialize(context, serviceLocator);
+                _initializeListeners[i].Initialize(context);
             }   
         }
 
