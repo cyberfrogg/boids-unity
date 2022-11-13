@@ -3,21 +3,21 @@ using Services.ServiceLocator;
 using Worlds.Bundle;
 using Worlds.Bundle.Impl;
 
-namespace Worlds.Impl.Menu
+namespace Worlds.Impl.Game
 {
-    public class MenuWorld : IWorld
+    public class GameWorld : IWorld
     {
         private WorldBundleCollection _bundleCollection;
         
         public void Install(IContext context, IServiceLocator serviceLocator)
         {
-            var menuInitialize = new MenuInitialize(context, serviceLocator);
-            context.ContextLifeCycle.AddInitializeListener(menuInitialize);
+            var gameInitialize = new GameInitialize(context, serviceLocator);
+            context.ContextLifeCycle.AddInitializeListener(gameInitialize);
 
             _bundleCollection = new WorldBundleCollection();
         }
         
-        public string Name => "Menu";
+        public string Name => "Game";
 
         public IWorldBundleCollection BundleCollection => _bundleCollection;
 

@@ -41,8 +41,6 @@ namespace Worlds.Impl.Menu
             _controllerSpawner = _serviceLocator.GetService<IControllerSpawner>();
             _controllerPrefabSpawner = _serviceLocator.GetService<IControllerPrefabSpawner>();
             _menuSelectorSettings = _serviceLocator.GetService<ISettingsLocator>().GetSettings<IMenuSelectorSettings>();
-            
-            _context.ContextLifeCycle.AddInitializeListener(this);
         }
         
         public void Initialize(IContext context)
