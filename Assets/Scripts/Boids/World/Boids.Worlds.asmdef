@@ -1,11 +1,8 @@
 {
-    "name": "Boids.Install",
+    "name": "Boids.World",
     "rootNamespace": "",
     "references": [
-        "GUID:bd83986e89a92df4f800bbc613312cbc",
-        "GUID:85e977e49b14f1a4aba6a5a5d9a83489",
-        "GUID:f43ebadb0ec66584ba550096797d2fb8",
-        "GUID:7068e36fe9f44bb4fa109bcd92f7b1f1"
+        "GUID:7f24e220e0900b94aa23b2fe628c7d57"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

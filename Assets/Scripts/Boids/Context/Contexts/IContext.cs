@@ -2,6 +2,7 @@
 {
     public interface IContext
     {
-        
+        bool IsEnabled { get; set; }
+        EContextType Type { get; }
     }
 }

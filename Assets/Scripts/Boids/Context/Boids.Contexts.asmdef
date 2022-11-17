@@ -1,3 +1,16 @@
 {
-	"name": "Boids.Contexts"
+    "name": "Boids.Contexts",
+    "rootNamespace": "",
+    "references": [
+        "GUID:85e977e49b14f1a4aba6a5a5d9a83489"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
 }
