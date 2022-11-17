@@ -1,4 +1,5 @@
 ﻿using System;
+using Worlds.Bundle;
 
 namespace Worlds.Abstracts
 {
@@ -6,5 +7,6 @@ namespace Worlds.Abstracts
     {
         event Action<IModel> Changed;
         public int Uid { get; set; }
+        public EWorldBundleTag Tag { get; set; }
     }
 }

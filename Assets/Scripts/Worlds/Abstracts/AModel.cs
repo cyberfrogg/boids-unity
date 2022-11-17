@@ -1,4 +1,5 @@
 ﻿using System;
+using Worlds.Bundle;
 
 namespace Worlds.Abstracts
 {
@@ -7,6 +8,7 @@ namespace Worlds.Abstracts
         public event Action<IModel> Changed;
 
         private int _uid;
+        private EWorldBundleTag _tag;
 
         public int Uid
         {
@@ -17,7 +19,17 @@ namespace Worlds.Abstracts
                 InvokeChanged();
             }
         }
-        
+
+        public EWorldBundleTag Tag
+        {
+            get => _tag;
+            set
+            {
+                _tag = value;
+                InvokeChanged();
+            }
+        }
+
         protected void InvokeChanged()
         {
             Changed?.Invoke(this);

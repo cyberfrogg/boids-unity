@@ -9,6 +9,7 @@ using Services.Scenes.SceneProvider;
 using Services.ServiceLocator;
 using Settings.Settings.Menu.MenuSelectorSettings;
 using Settings.SettingsLocator;
+using Worlds.Bundle;
 using Worlds.Impl.Menu.Controllers.Selector;
 using Worlds.Impl.Menu.Models.Selector;
 using Worlds.Impl.Menu.Views.Selector;
@@ -63,7 +64,8 @@ namespace Worlds.Impl.Menu
 
         private void CreateCamera()
         {
-            _controllerPrefabSpawner.SpawnPrefab<CameraController>(_context, "MenuCamera", new CameraModel());
+            var camera = _controllerPrefabSpawner.SpawnPrefab<CameraController>(_context, "MenuCamera", new CameraModel());
+            camera.Model.Tag = EWorldBundleTag.Camera;
         }
         
         private void CreateMenuSelector()

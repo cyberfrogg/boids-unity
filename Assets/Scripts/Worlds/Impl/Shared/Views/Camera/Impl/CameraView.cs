@@ -5,10 +5,10 @@ namespace Worlds.Impl.Shared.Views.Camera.Impl
 {
     public class CameraView : AGameObjectView, ICameraView
     {
-        [SerializeField] private UnityEngine.Camera _camera;
+        [SerializeField] private UnityEngine.Camera _cameraComponent;
         
         public int Uid { get; set; }
 
-        public UnityEngine.Camera Camera => _camera;
+        public UnityEngine.Camera Camera => _cameraComponent;
     }
 }
