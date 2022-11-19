@@ -2,7 +2,8 @@
     "name": "Boids.Contexts",
     "rootNamespace": "",
     "references": [
-        "GUID:85e977e49b14f1a4aba6a5a5d9a83489"
+        "GUID:85e977e49b14f1a4aba6a5a5d9a83489",
+        "GUID:e44108badab2e854785bc07ad7c0dfb5"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

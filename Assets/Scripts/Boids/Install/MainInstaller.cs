@@ -1,4 +1,5 @@
-﻿using Boids.Install.Settings;
+﻿using Boids.Context.Contexts;
+using Boids.Install.Settings;
 
 namespace Boids.Install
 {
@@ -14,7 +15,9 @@ namespace Boids.Install
         public void Install()
         {
             var contextsInstaller = new ContextCollectionInstaller(_settings);
-            contextsInstaller.InstallContextCollection();
+            var contextsCollection = contextsInstaller.InstallContextCollection();
+
+            contextsCollection.Get(EContextType.Splash).IsEnabled = true;
         }
     }
 }

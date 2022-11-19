@@ -6,5 +6,6 @@ namespace Boids.Context
     public interface IContextCollection
     {
         IReadOnlyCollection<IContext> Contexts { get; }
+        IContext Get(EContextType type);
     }
 }

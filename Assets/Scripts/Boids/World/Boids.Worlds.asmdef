@@ -2,7 +2,8 @@
     "name": "Boids.World",
     "rootNamespace": "",
     "references": [
-        "GUID:7f24e220e0900b94aa23b2fe628c7d57"
+        "GUID:f5a09e06db02748438aca4977d89ea96",
+        "GUID:e44108badab2e854785bc07ad7c0dfb5"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

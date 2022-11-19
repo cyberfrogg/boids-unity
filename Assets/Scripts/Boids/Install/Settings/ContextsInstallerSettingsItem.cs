@@ -9,6 +9,5 @@ namespace Boids.Install.Settings
     {
         [SerializeField] private EContextType _type;
         public EContextType Type => _type;
-
     }
 }
