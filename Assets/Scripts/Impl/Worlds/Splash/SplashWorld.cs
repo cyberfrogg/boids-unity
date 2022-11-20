@@ -1,4 +1,5 @@
-﻿using Boids.Services;
+﻿using System;
+using Boids.Services;
 using Boids.Services.Impl.SharedServices.Logger;
 using Boids.Services.Impl.SharedServices.SceneLoader;
 using Boids.World;
@@ -30,6 +31,11 @@ namespace Impl.Worlds.Splash
             Entities = new WorldEntityCollection();
         }
 
+        public event Action<string> SwitchRequested;
+        public void RequestSwitch(string world)
+        {
+            SwitchRequested?.Invoke(world);
+        }
         public IServiceLocator ServiceLocator { get; }
         public IWorldLifeCycle LifeCycle { get; }
         public IWorldEntityCollection Entities { get; }
@@ -63,7 +69,14 @@ namespace Impl.Worlds.Splash
 
         private void Initialize()
         {
-            _worldEntityFactoryService.CreateEmpty<GameInitializeModel, GameInitializeView, GameInitializePresenter>(this, new GameInitializeModel());
+            var initializeEntity = _worldEntityFactoryService
+                .CreateEmpty<
+                    GameInitializeModel,
+                    GameInitializeView,
+                    GameInitializePresenter
+                >(this, new GameInitializeModel());
+            
+            initializeEntity.Presenter.Initialize();
         }
     }
 }

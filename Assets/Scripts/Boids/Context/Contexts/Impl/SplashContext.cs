@@ -1,4 +1,5 @@
-﻿using Boids.Services;
+﻿using System;
+using Boids.Services;
 using Boids.World;
 
 namespace Boids.Context.Contexts.Impl
@@ -25,6 +26,9 @@ namespace Boids.Context.Contexts.Impl
                 _isEnabled = value;
             }
         }
+
+        public event Action<string> SwitchRequested;
+        public IWorld World => _world;
         public EContextType Type => EContextType.Splash;
     }
 }

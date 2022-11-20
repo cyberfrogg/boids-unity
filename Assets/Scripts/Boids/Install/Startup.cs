@@ -11,6 +11,8 @@ namespace Boids.Install
         {
             var installer = new MainInstaller(_settings);
             installer.Install();
+            
+            DontDestroyOnLoad(gameObject);
         }
     }
 }

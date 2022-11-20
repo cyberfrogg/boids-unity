@@ -1,4 +1,5 @@
-﻿using Boids.Services;
+﻿using System;
+using Boids.Services;
 using Boids.Services.Impl.SharedServices.Logger;
 using Boids.Services.Impl.SharedServices.SceneLoader;
 using Boids.World;
@@ -25,6 +26,11 @@ namespace Impl.Worlds.Game
             Entities = new WorldEntityCollection();
         }
 
+        public event Action<string> SwitchRequested;
+        public void RequestSwitch(string world)
+        {
+            SwitchRequested?.Invoke(world);
+        }
         public IServiceLocator ServiceLocator { get; }
         public IWorldLifeCycle LifeCycle { get; }
         public IWorldEntityCollection Entities { get; }
@@ -46,7 +52,10 @@ namespace Impl.Worlds.Game
 
         private void OnEnable()
         {
-            _logger.Log("Game context enabled");
+            _sceneLoader.Load("Game", false, (sceneName) =>
+            {
+                
+            });
         }
 
         private void OnDisable()
