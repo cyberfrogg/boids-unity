@@ -1,8 +1,8 @@
 ﻿using Boids.Context.Contexts;
 using Boids.Context.Contexts.Impl;
-using Boids.Install.InstallImpl.World.LifeCycle;
 using Boids.Services;
 using Boids.World;
+using Boids.World.LifeCycle.Impl;
 using Impl.Worlds.Splash;
 
 namespace Boids.Install.ContextInstallers.Impl

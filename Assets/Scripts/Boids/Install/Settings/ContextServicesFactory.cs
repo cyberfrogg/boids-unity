@@ -4,6 +4,9 @@ using Boids.Context.Contexts;
 using Boids.Services;
 using Boids.Services.Impl.SharedServices.Logger.Impl;
 using Boids.Services.Impl.SharedServices.SceneLoader.Impl;
+using Boids.World.Services.UidGenerator.Impl;
+using Boids.World.Services.WorldEntityFactoryService.Impl;
+using Boids.World.Services.WorldEntityLinker.Impl;
 
 namespace Boids.Install.Settings
 {
@@ -15,6 +18,10 @@ namespace Boids.Install.Settings
         
         public ContextServicesFactory()
         {
+            var uidGenerator = new UidGenerator();
+            var consoleLogger = new ConsoleLogger();
+            var worldEntityLinker = new WorldEntityLinker();
+            
             _gameServices = new List<IService>()
             {
 
@@ -25,8 +32,10 @@ namespace Boids.Install.Settings
             };
             _sharedServices = new List<IService>()
             {
+                consoleLogger,
+                uidGenerator,
                 new SceneLoader(),
-                new ConsoleLogger()
+                new WorldEntityFactoryService(uidGenerator, worldEntityLinker)
             };
         }
 

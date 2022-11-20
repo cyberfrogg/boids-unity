@@ -2,7 +2,7 @@
 
 namespace Boids.World.WorldAbstracts.Entity
 {
-    public interface IEntity<TM, TV, TP> 
+    public interface IEntity<out TM, out TV, out TP> 
         where TM : IModel
         where TV : IView
         where TP : IPresenter

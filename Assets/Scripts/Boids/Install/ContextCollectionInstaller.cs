@@ -5,12 +5,12 @@ using Boids.Context.Contexts;
 using Boids.Context.Impl;
 using Boids.Install.ContextInstallers;
 using Boids.Install.ContextInstallers.Impl;
-using Boids.Install.InstallImpl.World.LifeCycle;
 using Boids.Install.Settings;
 using Boids.Services;
 using Boids.Services.Impl;
 using Boids.Services.Impl.SharedServices.SettingsLocator;
 using Boids.Services.Impl.SharedServices.SettingsLocator.Impl;
+using Boids.World.LifeCycle.Impl;
 
 namespace Boids.Install
 {

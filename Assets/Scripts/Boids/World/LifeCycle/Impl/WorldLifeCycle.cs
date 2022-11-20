@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
-using Boids.World.LifeCycle;
 using UnityEngine;
 
-namespace Boids.Install.InstallImpl.World.LifeCycle
+namespace Boids.World.LifeCycle.Impl
 {
     public class WorldLifeCycle : MonoBehaviour, IWorldLifeCycle
     {

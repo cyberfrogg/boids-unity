@@ -1,7 +1,6 @@
-﻿using Boids.World.LifeCycle;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Boids.Install.InstallImpl.World.LifeCycle
+namespace Boids.World.LifeCycle.Impl
 {
     public class WorldLifeCycleFactory
     {
@@ -11,7 +10,6 @@ namespace Boids.Install.InstallImpl.World.LifeCycle
             {
                 name = nameof(WorldLifeCycle)
             };
-            
 
             var lifeCycle = go.AddComponent<WorldLifeCycle>();
             lifeCycle.Initialize();

@@ -3,12 +3,13 @@ using Boids.Services.Impl.SharedServices.Logger;
 using Boids.Services.Impl.SharedServices.SceneLoader;
 using Boids.World;
 using Boids.World.LifeCycle;
+using Boids.World.WorldAbstracts.Entity;
+using Boids.World.WorldAbstracts.Entity.Impl;
 
 namespace Impl.Worlds.Game
 {
     public class GameWorld : IWorld
     {
-        private readonly IServiceLocator _serviceLocator;
         private readonly ISceneLoader _sceneLoader;
         private readonly ILogger _logger;
         
@@ -16,14 +17,17 @@ namespace Impl.Worlds.Game
 
         public GameWorld(IWorldLifeCycle worldLifeCycle, IServiceLocator serviceLocator)
         {
-            _serviceLocator = serviceLocator;
-            _sceneLoader = _serviceLocator.GetService<ISceneLoader>();
-            _logger = _serviceLocator.GetService<ILogger>();
+            ServiceLocator = serviceLocator;
+            _sceneLoader = ServiceLocator.GetService<ISceneLoader>();
+            _logger = ServiceLocator.GetService<ILogger>();
             
             LifeCycle = worldLifeCycle;
+            Entities = new WorldEntityCollection();
         }
-        
+
+        public IServiceLocator ServiceLocator { get; }
         public IWorldLifeCycle LifeCycle { get; }
+        public IWorldEntityCollection Entities { get; }
 
         public bool IsEnabled
         {
