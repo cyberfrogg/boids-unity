@@ -7,6 +7,7 @@ using Boids.Services.Impl.SharedServices.SceneLoader.Impl;
 using Boids.World.Services.UidGenerator.Impl;
 using Boids.World.Services.WorldEntityFactoryService.Impl;
 using Boids.World.Services.WorldEntityLinker.Impl;
+using Impl.Worlds.Game.Services.Impl;
 
 namespace Boids.Install.Settings
 {
@@ -24,7 +25,7 @@ namespace Boids.Install.Settings
             
             _gameServices = new List<IService>()
             {
-
+                new SpecialGameWorldService()
             };
             _splashServices = new List<IService>()
             {

@@ -3,11 +3,11 @@ using Boids.World;
 
 namespace Impl.Worlds.Splash.Initialize.Presenter
 {
-    public class GameInitializePresenter : APresenter
+    public class SplashInitializePresenter : APresenter
     {
         private readonly IWorld _world;
         
-        public GameInitializePresenter(IWorld world)
+        public SplashInitializePresenter(IWorld world)
         {
             _world = world;
         }

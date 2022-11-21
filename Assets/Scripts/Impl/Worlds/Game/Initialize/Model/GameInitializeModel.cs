@@ -1,6 +1,6 @@
 ﻿using Boids.MvpUtils;
 
-namespace Impl.Worlds.Splash.Initialize.Model
+namespace Impl.Worlds.Game.Initialize.Model
 {
     public class GameInitializeModel : AModel
     {

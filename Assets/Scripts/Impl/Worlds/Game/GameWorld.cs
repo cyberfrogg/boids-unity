@@ -4,13 +4,18 @@ using Boids.Services.Impl.SharedServices.Logger;
 using Boids.Services.Impl.SharedServices.SceneLoader;
 using Boids.World;
 using Boids.World.LifeCycle;
+using Boids.World.Services.WorldEntityFactoryService;
 using Boids.World.WorldAbstracts.Entity;
 using Boids.World.WorldAbstracts.Entity.Impl;
+using Impl.Worlds.Game.Initialize.Model;
+using Impl.Worlds.Game.Initialize.Presenter;
+using Impl.Worlds.Game.Initialize.View;
 
 namespace Impl.Worlds.Game
 {
     public class GameWorld : IWorld
     {
+        private readonly IWorldEntityFactoryService _worldEntityFactoryService;
         private readonly ISceneLoader _sceneLoader;
         private readonly ILogger _logger;
         
@@ -19,6 +24,7 @@ namespace Impl.Worlds.Game
         public GameWorld(IWorldLifeCycle worldLifeCycle, IServiceLocator serviceLocator)
         {
             ServiceLocator = serviceLocator;
+            _worldEntityFactoryService = ServiceLocator.GetService<IWorldEntityFactoryService>();
             _sceneLoader = ServiceLocator.GetService<ISceneLoader>();
             _logger = ServiceLocator.GetService<ILogger>();
             
@@ -54,13 +60,25 @@ namespace Impl.Worlds.Game
         {
             _sceneLoader.Load("Game", false, (sceneName) =>
             {
-                
+                Initialize();
             });
         }
 
         private void OnDisable()
         {
             
+        }
+
+        private void Initialize()
+        {
+            var initializeEntity = _worldEntityFactoryService
+                .CreateEmpty<
+                    GameInitializeModel,
+                    GameInitializeView,
+                    GameInitializePresenter
+                >(this, new GameInitializeModel());
+            
+            initializeEntity.Presenter.Initialize();
         }
     }
 }

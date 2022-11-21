@@ -1,6 +1,6 @@
 ﻿using Boids.MvpUtils;
 
-namespace Impl.Worlds.Splash.Initialize.View
+namespace Impl.Worlds.Game.Initialize.View
 {
     public class GameInitializeView : AView
     {

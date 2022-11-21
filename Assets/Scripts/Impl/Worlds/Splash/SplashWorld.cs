@@ -1,7 +1,6 @@
 ﻿using System;
 using Boids.Services;
 using Boids.Services.Impl.SharedServices.Logger;
-using Boids.Services.Impl.SharedServices.SceneLoader;
 using Boids.World;
 using Boids.World.LifeCycle;
 using Boids.World.Services.WorldEntityFactoryService;
@@ -15,7 +14,6 @@ namespace Impl.Worlds.Splash
 {
     public class SplashWorld : IWorld
     {
-        private readonly ISceneLoader _sceneLoader;
         private readonly IWorldEntityFactoryService _worldEntityFactoryService;
         private readonly ILogger _logger;
         private bool _isEnabled;
@@ -23,7 +21,6 @@ namespace Impl.Worlds.Splash
         public SplashWorld(IWorldLifeCycle worldLifeCycle, IServiceLocator serviceLocator)
         {
             ServiceLocator = serviceLocator;
-            _sceneLoader = ServiceLocator.GetService<ISceneLoader>();
             _logger = ServiceLocator.GetService<ILogger>();
             _worldEntityFactoryService = ServiceLocator.GetService<IWorldEntityFactoryService>();
             
@@ -71,10 +68,10 @@ namespace Impl.Worlds.Splash
         {
             var initializeEntity = _worldEntityFactoryService
                 .CreateEmpty<
-                    GameInitializeModel,
-                    GameInitializeView,
-                    GameInitializePresenter
-                >(this, new GameInitializeModel());
+                    SplashInitializeModel,
+                    SplashInitializeView,
+                    SplashInitializePresenter
+                >(this, new SplashInitializeModel());
             
             initializeEntity.Presenter.Initialize();
         }
