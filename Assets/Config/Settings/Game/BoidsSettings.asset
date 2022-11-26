@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1bc72e833fe34e77976e7905d91251bd, type: 3}
-  m_Name: GameContextSettingsSettings
+  m_Script: {fileID: 11500000, guid: 76c436c853a74b12b5b61774d702fc73, type: 3}
+  m_Name: BoidsSettings
   m_EditorClassIdentifier: 
-  _boidsSettings: {fileID: 11400000, guid: 5840c00072b80d84e99d66d5155f9c25, type: 2}
+  _boidsCount: 20
