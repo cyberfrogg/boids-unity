@@ -7,7 +7,17 @@ namespace Boids.MvpUtils.Impl
         public event Action<T> Changed;
         
         public T Value { get; set; }
+
+        public ModelField(T value)
+        {
+            Value = value;
+        }
         
+        public ModelField()
+        {
+            Value = default;
+        }
+
         public void SetValueReactive(T value)
         {
             Value = value;
