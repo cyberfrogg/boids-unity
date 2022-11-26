@@ -12,4 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76c436c853a74b12b5b61774d702fc73, type: 3}
   m_Name: BoidsSettings
   m_EditorClassIdentifier: 
-  _boidsCount: 20
+  _boidsCount: 200
+  _boidsSpawnRadius: 30
+  _cohesionRadius: 3
+  _separationDistance: 5
+  _maxVelocity: 1
