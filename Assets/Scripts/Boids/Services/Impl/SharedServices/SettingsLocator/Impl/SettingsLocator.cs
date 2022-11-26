@@ -19,7 +19,7 @@ namespace Boids.Services.Impl.SharedServices.SettingsLocator.Impl
             if (foundServices.Count == 0)
                 throw new KeyNotFoundException($"Service {typeof(T).Name} not found");
 
-            return foundServices[1];
+            return foundServices[0];
         }
     }
 }

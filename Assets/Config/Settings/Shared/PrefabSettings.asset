@@ -9,8 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 23a1deec1aea40eba2348067d56f6ed0, type: 3}
-  m_Name: SharedSettings
+  m_Script: {fileID: 11500000, guid: 98e85ef6c3534110aa0f68f19e9f6238, type: 3}
+  m_Name: PrefabSettings
   m_EditorClassIdentifier: 
-  _sceneCollectionSettings: {fileID: 11400000, guid: df0538f8a9ab8324587ebd90cde10616, type: 2}
-  _prefabSettings: {fileID: 11400000, guid: 444a839b26a095448bd3f8ae5fdf2196, type: 2}
+  _allPrefabs:
+  - Name: MainCamera
+    Prefab: {fileID: 3488043743166173119, guid: b467b94e126890647ac5073f85827a2b, type: 3}

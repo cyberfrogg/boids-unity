@@ -10,5 +10,10 @@ namespace Boids.World.Services.WorldEntityFactoryService
             where TM : IModel
             where TV : IView, new()
             where TP : IPresenter;
+
+        IEntity<TM, TV, TP> CreateFromPrefab<TM, TV, TP>(IWorld world, TM model, string prefabName)
+            where TM : IModel
+            where TV : IView, new()
+            where TP : IPresenter;
     }
 }
