@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Boids.MvpUtils;
 using Boids.MvpUtils.Impl;
+using Boids.Services.Impl.SharedServices.ScenePointer;
 using Boids.Services.Impl.SharedServices.SettingsLocator;
 using Boids.World;
 using Boids.World.Services.WorldEntityFactoryService;
@@ -12,6 +13,7 @@ using Impl.Worlds.Game.Camera.Model;
 using Impl.Worlds.Game.Camera.Presenter;
 using Impl.Worlds.Game.Camera.View;
 using Impl.Worlds.Game.Settings.BoidsSettings;
+using Impl.Worlds.Game.WorldPointers;
 using UnityEngine;
 
 namespace Impl.Worlds.Game.Initialize.Presenter
@@ -21,11 +23,13 @@ namespace Impl.Worlds.Game.Initialize.Presenter
         private readonly IWorld _world;
         private readonly IWorldEntityFactoryService _worldEntityFactoryService;
         private readonly IBoidsSettings _boidsSettings;
+        private readonly IWorldSceneObjectPointerService _worldSceneObjectPointerService;
         
         public GameInitializePresenter(IWorld world)
         {
             _world = world;
             _worldEntityFactoryService = _world.ServiceLocator.GetService<IWorldEntityFactoryService>();
+            _worldSceneObjectPointerService = _world.ServiceLocator.GetService<IWorldSceneObjectPointerService>();
             _boidsSettings = _world.ServiceLocator.GetService<ISettingsLocator>().GetSettings<IBoidsSettings>();
         }
 
@@ -38,14 +42,21 @@ namespace Impl.Worlds.Game.Initialize.Presenter
 
         private IEntity<BoidCollectionModel, BoidCollectionView, BoidCollectionPresenter> CreateBoidsCollection()
         {
+            // create collection
+            var fieldBounds = _worldSceneObjectPointerService.Get<FieldPointer>().Bounds;
             var collection = _worldEntityFactoryService.CreateEmpty<
                 BoidCollectionModel,
                 BoidCollectionView,
                 BoidCollectionPresenter
-            >(_world, new BoidCollectionModel());
+            >(_world, new BoidCollectionModel()
+            {
+                Bounds = new ModelField<Bounds>(fieldBounds),
+                OverlapBuffer = new ModelField<IEntity<BoidModel, BoidView, BoidPresenter>[]>(new IEntity<BoidModel, BoidView, BoidPresenter>[_boidsSettings.BoidsCount])
+            });
             
             for (var i = 0; i < _boidsSettings.BoidsCount; i++)
             {
+                //creating model
                 var spawnPosition = Random.insideUnitSphere * _boidsSettings.BoidsSpawnRadius;
                 spawnPosition = new Vector3(spawnPosition.x, spawnPosition.y, 0);
                 var boidModel = new BoidModel()
@@ -53,9 +64,10 @@ namespace Impl.Worlds.Game.Initialize.Presenter
                     Position = new ModelField<Vector3>(spawnPosition),
                     Collection = new ModelField<IEntity<BoidCollectionModel, BoidCollectionView, BoidCollectionPresenter>>(collection),
                     LocalScale = new ModelField<Vector3>(Vector3.one),
-                    Tags = new ModelField<List<string>>(new List<string>() { "boid" }),
-                    OverlapBuffer = new ModelField<IEntity<BoidModel, BoidView, BoidPresenter>[]>(new IEntity<BoidModel, BoidView, BoidPresenter>[_boidsSettings.BoidsCount])
+                    Tags = new ModelField<List<string>>(new List<string>() { "boid" })
                 };
+                
+                //create single boid
                 var boid = _worldEntityFactoryService.CreateFromPrefab<
                     BoidModel,
                     BoidView,
@@ -63,6 +75,7 @@ namespace Impl.Worlds.Game.Initialize.Presenter
                 >(_world, boidModel, "boid");
                 boid.Presenter.Initialize();
                 
+                //add created boid to collection
                 collection.Model.Items.Value.Add(boid);
             }
 

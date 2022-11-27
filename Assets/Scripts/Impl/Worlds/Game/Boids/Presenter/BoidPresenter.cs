@@ -32,7 +32,7 @@ namespace Impl.Worlds.Game.Boids.Presenter
         public void Update()
         {
             CalculateVelocity();
-            //DrawDebug();
+            //DrawDebug();      // 1200 batches from debug.drawRay? wtf
 
             var newPosition = _model.Position.Value + (_model.Velocity.Value * Time.deltaTime);
             _model.Position.SetValueReactive(newPosition);
@@ -46,10 +46,12 @@ namespace Impl.Worlds.Game.Boids.Presenter
             _model.Alignment.Value = Vector3.zero;
             _model.SeparationCount.Value = 0;
 
+            var overlapBuffer = _model.Collection.Value.Model.OverlapBuffer.Value;
+
             var availableOverlappedBoids = 0;
-            OverlapBoids(_model.Position.Value, _boidsSettings.CohesionRadius, _model.OverlapBuffer.Value);
+            OverlapBoids(_model.Position.Value, _boidsSettings.CohesionRadius, overlapBuffer);
             
-            foreach (var otherBoid in _model.OverlapBuffer.Value)
+            foreach (var otherBoid in overlapBuffer)
             {
                 if(otherBoid == null)
                     continue;
@@ -92,10 +94,7 @@ namespace Impl.Worlds.Game.Boids.Presenter
                 var boid = collection[i];
                 var distance = Vector3.Distance(position, boid.Model.Position.Value);
 
-                if (distance < radius)
-                {
-                    buffer[i] = collection[i];
-                }
+                buffer[i] = distance < radius ? collection[i] : null;
             }
         }
     }
