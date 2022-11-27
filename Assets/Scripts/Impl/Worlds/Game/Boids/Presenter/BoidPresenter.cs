@@ -31,8 +31,12 @@ namespace Impl.Worlds.Game.Boids.Presenter
 
         public void Update()
         {
-            CalculateVelocity();
-            ClampSelfInRadius();
+            if (CanUpdateVelocity(_model.Collection.Value.Model.FramesCount.Value))
+            {
+                CalculateVelocity();
+                ClampSelfInRadius();
+            }
+            RotateTowards();
             //DrawDebug();      // 1200 batches from debug.drawRay? wtf
 
             var newPosition = _model.Position.Value + (_model.Velocity.Value * Time.deltaTime);
@@ -99,6 +103,13 @@ namespace Impl.Worlds.Game.Boids.Presenter
             }
         }
 
+        private void RotateTowards()
+        {
+            var direction = _model.Velocity.Value.normalized;
+            var angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            _model.Rotation.SetValueReactive( Quaternion.AngleAxis(angle - 90, Vector3.forward));
+        }
+
         private void OverlapBoids(Vector3 position, float radius, IEntity<BoidModel, BoidView, BoidPresenter>[] buffer)
         {
             var collection = _model.Collection.Value.Model.Items.Value;
@@ -110,10 +121,10 @@ namespace Impl.Worlds.Game.Boids.Presenter
                 buffer[i] = distance < radius ? collection[i] : null;
             }
         }
-        
-        private float SetSign(float value, bool isPositive)
+
+        private bool CanUpdateVelocity(int frameIndex)
         {
-            return isPositive ? value >= 0 ? value : -value : value >= 0 ? -value : value;
+            return frameIndex % _model.UpdateFrameIndex.Value == 0;
         }
     }
 }

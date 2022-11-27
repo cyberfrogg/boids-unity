@@ -14,6 +14,7 @@ namespace Impl.Worlds.Game.Boids.Model
         public ModelField<Vector3> Separation { get; set; } = new();
         public ModelField<int> SeparationCount { get; set; } = new();
         public ModelField<Vector3> Alignment { get; set; } = new();
+        public ModelField<int> UpdateFrameIndex { get; set; } = new();
         public ModelField<IEntity<BoidCollectionModel, BoidCollectionView, BoidCollectionPresenter>> Collection { get; set; } = new ();
     }
 }

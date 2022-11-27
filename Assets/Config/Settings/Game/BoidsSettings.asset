@@ -16,5 +16,5 @@ MonoBehaviour:
   _boidsSpawnRadius: 30
   _cohesionRadius: 3
   _separationDistance: 5
-  _maxVelocity: 3
-  _borderRadius: 20
+  _maxVelocity: 10
+  _borderRadius: 15

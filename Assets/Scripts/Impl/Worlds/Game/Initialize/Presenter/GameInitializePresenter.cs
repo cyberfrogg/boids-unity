@@ -57,6 +57,7 @@ namespace Impl.Worlds.Game.Initialize.Presenter
             for (var i = 0; i < _boidsSettings.BoidsCount; i++)
             {
                 //creating model
+                var frameUpdateIndex = Random.Range(1, 1000);
                 var spawnPosition = Random.insideUnitSphere * _boidsSettings.BoidsSpawnRadius;
                 spawnPosition = new Vector3(spawnPosition.x, spawnPosition.y, 0);
                 var boidModel = new BoidModel()
@@ -64,7 +65,8 @@ namespace Impl.Worlds.Game.Initialize.Presenter
                     Position = new ModelField<Vector3>(spawnPosition),
                     Collection = new ModelField<IEntity<BoidCollectionModel, BoidCollectionView, BoidCollectionPresenter>>(collection),
                     LocalScale = new ModelField<Vector3>(Vector3.one),
-                    Tags = new ModelField<List<string>>(new List<string>() { "boid" })
+                    Tags = new ModelField<List<string>>(new List<string>() { "boid" }),
+                    UpdateFrameIndex = new ModelField<int>(frameUpdateIndex)
                 };
                 
                 //create single boid
