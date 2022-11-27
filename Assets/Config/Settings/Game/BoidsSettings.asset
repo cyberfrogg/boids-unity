@@ -17,3 +17,4 @@ MonoBehaviour:
   _cohesionRadius: 3
   _separationDistance: 5
   _maxVelocity: 3
+  _borderRadius: 20

@@ -43,14 +43,14 @@ namespace Impl.Worlds.Game.Initialize.Presenter
         private IEntity<BoidCollectionModel, BoidCollectionView, BoidCollectionPresenter> CreateBoidsCollection()
         {
             // create collection
-            var fieldBounds = _worldSceneObjectPointerService.Get<FieldPointer>().Bounds;
+            var fieldCenter = _worldSceneObjectPointerService.Get<FieldPointer>().Bounds;
             var collection = _worldEntityFactoryService.CreateEmpty<
                 BoidCollectionModel,
                 BoidCollectionView,
                 BoidCollectionPresenter
             >(_world, new BoidCollectionModel()
             {
-                Bounds = new ModelField<Bounds>(fieldBounds),
+                FieldCenter = new ModelField<Vector3>(fieldCenter),
                 OverlapBuffer = new ModelField<IEntity<BoidModel, BoidView, BoidPresenter>[]>(new IEntity<BoidModel, BoidView, BoidPresenter>[_boidsSettings.BoidsCount])
             });
             

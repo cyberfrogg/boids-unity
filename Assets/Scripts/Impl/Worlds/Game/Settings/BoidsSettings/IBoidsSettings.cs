@@ -9,5 +9,6 @@ namespace Impl.Worlds.Game.Settings.BoidsSettings
         float SeparationDistance { get; }
         float CohesionRadius { get; } 
         float MaxVelocity { get; }
+        float BorderRadius { get; }
     }
 }

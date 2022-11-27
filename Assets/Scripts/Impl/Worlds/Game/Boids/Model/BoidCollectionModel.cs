@@ -12,6 +12,6 @@ namespace Impl.Worlds.Game.Boids.Model
     {
         public ModelField<List<IEntity<BoidModel, BoidView, BoidPresenter>>> Items { get; set; } = new() { Value = new List<IEntity<BoidModel, BoidView, BoidPresenter>>() };
         public ModelField<IEntity<BoidModel, BoidView, BoidPresenter>[]> OverlapBuffer { get; set; } = new();
-        public ModelField<Bounds> Bounds { get; set; } = new();
+        public ModelField<Vector3> FieldCenter { get; set; } = new();
     }
 }
