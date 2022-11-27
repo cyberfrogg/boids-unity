@@ -13,12 +13,12 @@ namespace Impl.Worlds.Game.Initialize.Presenter
     public class GameInitializePresenter : APresenter
     {
         private readonly IWorld _world;
-        private readonly IWorldEntityFactoryService _specialGameWorldService;
+        private readonly IWorldEntityFactoryService _worldEntityFactoryService;
         
         public GameInitializePresenter(IWorld world)
         {
             _world = world;
-            _specialGameWorldService = _world.ServiceLocator.GetService<IWorldEntityFactoryService>();
+            _worldEntityFactoryService = _world.ServiceLocator.GetService<IWorldEntityFactoryService>();
         }
 
         public void Initialize()
@@ -29,7 +29,7 @@ namespace Impl.Worlds.Game.Initialize.Presenter
                 GoTag = new ModelField<string>("MainCamera"),
                 LocalPosition = new ModelField<Vector3>(new Vector3(0, 0, -10)),
             };
-            var cameraEntity = _specialGameWorldService.CreateFromPrefab<
+            var cameraEntity = _worldEntityFactoryService.CreateFromPrefab<
                 CameraModel,
                 CameraView,
                 CameraPresenter
