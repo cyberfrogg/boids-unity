@@ -4,6 +4,7 @@ using Boids.Context.Contexts;
 using Boids.Services;
 using Boids.Services.Impl.SharedServices.Logger.Impl;
 using Boids.Services.Impl.SharedServices.SceneLoader.Impl;
+using Boids.Services.Impl.SharedServices.ScenePointer.Impl;
 using Boids.World.Services.UidGenerator.Impl;
 using Boids.World.Services.WorldEntityFactoryService.Impl;
 using Boids.World.Services.WorldEntityLinker.Impl;
@@ -36,7 +37,8 @@ namespace Boids.Install.Settings
                 consoleLogger,
                 uidGenerator,
                 new SceneLoader(),
-                new WorldEntityFactoryService(uidGenerator, worldEntityLinker)
+                new WorldEntityFactoryService(uidGenerator, worldEntityLinker),
+                new WorldSceneObjectPointerService()
             };
         }
 
