@@ -74,8 +74,13 @@ _world.Entities.GetByTag("tag") // returns collection of entities by tag
 ```
 
 ## Contribution
-Framework is open-source and this is my first open-source project. I have no idea how can I manage all contributions. But for now, use separate branch and merge requests / pull request.
-
+Framework is open-source and this is my first open-source project. Use separate branch and merge requests / pull request.
+Here is some good behaviours:
+* Every commit should be named understandable and in English
+* Every commit should start with: `DEV - for main devs`, `CTR - for public contributors`, `EX - for example & showcases branches`;
+* Before pull request, **Pull** changes from `main`.
+* Create merge request and wait for merge or comments
 #### Contacts:
 * [Discord](https://discord.gg/EkS3SjqZfd)
 * [Website](https://cyberfrogg.com/)
+* [Official Repository](https://github.com/cyberfrogg/boids-unity)
