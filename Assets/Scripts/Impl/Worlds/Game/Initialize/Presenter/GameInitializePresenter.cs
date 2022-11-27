@@ -12,6 +12,7 @@ using Impl.Worlds.Game.Boids.View;
 using Impl.Worlds.Game.Camera.Model;
 using Impl.Worlds.Game.Camera.Presenter;
 using Impl.Worlds.Game.Camera.View;
+using Impl.Worlds.Game.Services.Boids.BoidsFactory;
 using Impl.Worlds.Game.Settings.BoidsSettings;
 using Impl.Worlds.Game.WorldPointers;
 using UnityEngine;
@@ -24,6 +25,7 @@ namespace Impl.Worlds.Game.Initialize.Presenter
         private readonly IWorldEntityFactoryService _worldEntityFactoryService;
         private readonly IBoidsSettings _boidsSettings;
         private readonly IWorldSceneObjectPointerService _worldSceneObjectPointerService;
+        private readonly IBoidsFactoryService _boidsFactoryService;
         
         public GameInitializePresenter(IWorld world)
         {
@@ -31,6 +33,7 @@ namespace Impl.Worlds.Game.Initialize.Presenter
             _worldEntityFactoryService = _world.ServiceLocator.GetService<IWorldEntityFactoryService>();
             _worldSceneObjectPointerService = _world.ServiceLocator.GetService<IWorldSceneObjectPointerService>();
             _boidsSettings = _world.ServiceLocator.GetService<ISettingsLocator>().GetSettings<IBoidsSettings>();
+            _boidsFactoryService = _world.ServiceLocator.GetService<IBoidsFactoryService>();
         }
 
         public void Initialize()
@@ -38,6 +41,8 @@ namespace Impl.Worlds.Game.Initialize.Presenter
             CreateCamera();
             var boidCollection = CreateBoidsCollection();
             boidCollection.Presenter.Initialize();
+
+            CreateBoidsEmitter(boidCollection);
         }
 
         private IEntity<BoidCollectionModel, BoidCollectionView, BoidCollectionPresenter> CreateBoidsCollection()
@@ -56,26 +61,13 @@ namespace Impl.Worlds.Game.Initialize.Presenter
             
             for (var i = 0; i < _boidsSettings.BoidsCount; i++)
             {
-                //creating model
+                //creating model parameters
                 var frameUpdateIndex = Random.Range(1, 1000);
                 var spawnPosition = Random.insideUnitSphere * _boidsSettings.BoidsSpawnRadius;
                 spawnPosition = new Vector3(spawnPosition.x, spawnPosition.y, 0);
-                var boidModel = new BoidModel()
-                {
-                    Position = new ModelField<Vector3>(spawnPosition),
-                    Collection = new ModelField<IEntity<BoidCollectionModel, BoidCollectionView, BoidCollectionPresenter>>(collection),
-                    LocalScale = new ModelField<Vector3>(Vector3.one),
-                    Tags = new ModelField<List<string>>(new List<string>() { "boid" }),
-                    UpdateFrameIndex = new ModelField<int>(frameUpdateIndex)
-                };
-                
-                //create single boid
-                var boid = _worldEntityFactoryService.CreateFromPrefab<
-                    BoidModel,
-                    BoidView,
-                    BoidPresenter
-                >(_world, boidModel, "boid");
-                boid.Presenter.Initialize();
+
+                //create boid
+                var boid = _boidsFactoryService.Create(_world, spawnPosition, collection, frameUpdateIndex);
                 
                 //add created boid to collection
                 collection.Model.Items.Value.Add(boid);
@@ -99,6 +91,19 @@ namespace Impl.Worlds.Game.Initialize.Presenter
             >(_world, cameraModel, "MainCamera");
             
             cameraEntity.Presenter.Initialize();
+        }
+
+        private void CreateBoidsEmitter(IEntity<BoidCollectionModel, BoidCollectionView, BoidCollectionPresenter> boidsCollection)
+        {
+            var emitter = _worldEntityFactoryService
+                .CreateEmpty<BoidsEmitterModel, BoidsEmitterView, BoidsEmitterPresenter>(
+                    _world,
+                    new BoidsEmitterModel()
+                    {
+                        Collection = new ModelField<IEntity<BoidCollectionModel, BoidCollectionView, BoidCollectionPresenter>>(boidsCollection)
+                    });
+            
+            emitter.Presenter.Initialize();
         }
     }
 }

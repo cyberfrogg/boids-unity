@@ -21,10 +21,10 @@ namespace Boids.MvpUtils.Impl
         public void SetValueReactive(T value)
         {
             Value = value;
-            InvokeChanged();
+            InvokeReactive();
         }
 
-        private void InvokeChanged()
+        public void InvokeReactive()
         {
             Changed?.Invoke(Value);
         }

@@ -8,7 +8,7 @@ using Boids.Services.Impl.SharedServices.ScenePointer.Impl;
 using Boids.World.Services.UidGenerator.Impl;
 using Boids.World.Services.WorldEntityFactoryService.Impl;
 using Boids.World.Services.WorldEntityLinker.Impl;
-using Impl.Worlds.Game.Services.Impl;
+using Impl.Worlds.Game.Services.Boids.BoidsFactory.Impl;
 
 namespace Boids.Install.Settings
 {
@@ -23,10 +23,11 @@ namespace Boids.Install.Settings
             var uidGenerator = new UidGenerator();
             var consoleLogger = new ConsoleLogger();
             var worldEntityLinker = new WorldEntityLinker();
+            var worldEntityFactory = new WorldEntityFactoryService(uidGenerator, worldEntityLinker);
             
             _gameServices = new List<IService>()
             {
-                new SpecialGameWorldService()
+                new BoidsFactoryService(worldEntityFactory)
             };
             _splashServices = new List<IService>()
             {
@@ -37,7 +38,7 @@ namespace Boids.Install.Settings
                 consoleLogger,
                 uidGenerator,
                 new SceneLoader(),
-                new WorldEntityFactoryService(uidGenerator, worldEntityLinker),
+                worldEntityFactory,
                 new WorldSceneObjectPointerService()
             };
         }
