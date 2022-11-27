@@ -53,7 +53,8 @@ namespace Impl.Worlds.Game.Initialize.Presenter
                     Position = new ModelField<Vector3>(spawnPosition),
                     Collection = new ModelField<IEntity<BoidCollectionModel, BoidCollectionView, BoidCollectionPresenter>>(collection),
                     LocalScale = new ModelField<Vector3>(Vector3.one),
-                    Tags = new ModelField<List<string>>(new List<string>() { "boid" })
+                    Tags = new ModelField<List<string>>(new List<string>() { "boid" }),
+                    OverlapBuffer = new ModelField<IEntity<BoidModel, BoidView, BoidPresenter>[]>(new IEntity<BoidModel, BoidView, BoidPresenter>[_boidsSettings.BoidsCount])
                 };
                 var boid = _worldEntityFactoryService.CreateFromPrefab<
                     BoidModel,

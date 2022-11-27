@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Boids.MvpUtils;
+﻿using Boids.MvpUtils;
 using Boids.Services.Impl.SharedServices.SettingsLocator;
 using Boids.World;
 using Boids.World.LifeCycle;
@@ -33,7 +32,7 @@ namespace Impl.Worlds.Game.Boids.Presenter
         public void Update()
         {
             CalculateVelocity();
-            DrawDebug();
+            //DrawDebug();
 
             var newPosition = _model.Position.Value + (_model.Velocity.Value * Time.deltaTime);
             _model.Position.SetValueReactive(newPosition);
@@ -46,10 +45,16 @@ namespace Impl.Worlds.Game.Boids.Presenter
             _model.Separation.Value = Vector3.zero;
             _model.Alignment.Value = Vector3.zero;
             _model.SeparationCount.Value = 0;
+
+            var availableOverlappedBoids = 0;
+            OverlapBoids(_model.Position.Value, _boidsSettings.CohesionRadius, _model.OverlapBuffer.Value);
             
-            var overlappedBoids = OverlapBoids(_model.Position.Value, _boidsSettings.CohesionRadius);
-            foreach (var otherBoid in overlappedBoids)
+            foreach (var otherBoid in _model.OverlapBuffer.Value)
             {
+                if(otherBoid == null)
+                    continue;
+                availableOverlappedBoids++;
+                
                 _model.Cohesion.Value += otherBoid.Model.Position.Value;
                 _model.Alignment.Value += otherBoid.Model.Velocity.Value;
 
@@ -65,7 +70,7 @@ namespace Impl.Worlds.Game.Boids.Presenter
                 }
             }
 
-            _model.Cohesion.Value /= overlappedBoids.Count;
+            _model.Cohesion.Value /= availableOverlappedBoids;
             _model.Cohesion.Value -= _model.Position.Value;
             
             if ( _model.SeparationCount.Value > 0)
@@ -73,34 +78,25 @@ namespace Impl.Worlds.Game.Boids.Presenter
                 _model.Separation.Value /=  _model.SeparationCount.Value;
             }
 
-            _model.Alignment.Value /= overlappedBoids.Count;
+            _model.Alignment.Value /= availableOverlappedBoids;
 
             _model.Velocity.Value = _model.Cohesion.Value + _model.Separation.Value + _model.Alignment.Value * 2;
             _model.Velocity.Value = Vector3.ClampMagnitude(_model.Velocity.Value, _boidsSettings.MaxVelocity);
         }
 
-        private void DrawDebug()
+        private void OverlapBoids(Vector3 position, float radius, IEntity<BoidModel, BoidView, BoidPresenter>[] buffer)
         {
-            Debug.DrawRay(_model.Position.Value, _model.Separation.Value, Color.green);
-            Debug.DrawRay(_model.Position.Value, _model.Cohesion.Value, Color.magenta);
-            Debug.DrawRay(_model.Position.Value, _model.Alignment.Value, Color.blue);
-        }
-
-        private List<IEntity<BoidModel, BoidView, BoidPresenter>> OverlapBoids(Vector3 position, float radius)
-        {
-            var result = new List<IEntity<BoidModel, BoidView, BoidPresenter>>();
-
-            foreach (var boid in _model.Collection.Value.Model.Items.Value)
+            var collection = _model.Collection.Value.Model.Items.Value;
+            for (var i = 0; i < buffer.Length; i++)
             {
+                var boid = collection[i];
                 var distance = Vector3.Distance(position, boid.Model.Position.Value);
 
-                if (distance <= radius)
+                if (distance < radius)
                 {
-                    result.Add(boid);
+                    buffer[i] = collection[i];
                 }
             }
-
-            return result;
         }
     }
 }
