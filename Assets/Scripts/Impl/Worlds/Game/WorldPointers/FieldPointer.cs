@@ -12,7 +12,7 @@ namespace Impl.Worlds.Game.WorldPointers
         private void OnDrawGizmos()
         {
             Gizmos.color = Color.gray;
-            Gizmos.DrawWireCube(_bounds.center, _bounds.extents);
+            Gizmos.DrawWireCube(_bounds.center, _bounds.size);
         }
     }
 }

@@ -32,6 +32,7 @@ namespace Impl.Worlds.Game.Boids.Presenter
         public void Update()
         {
             CalculateVelocity();
+            ClampVelocityInFieldBounds();
             //DrawDebug();      // 1200 batches from debug.drawRay? wtf
 
             var newPosition = _model.Position.Value + (_model.Velocity.Value * Time.deltaTime);
@@ -86,6 +87,28 @@ namespace Impl.Worlds.Game.Boids.Presenter
             _model.Velocity.Value = Vector3.ClampMagnitude(_model.Velocity.Value, _boidsSettings.MaxVelocity);
         }
 
+        private void ClampVelocityInFieldBounds()
+        {
+            var boidPosition = _model.Position.Value;
+            var boidVelocity = _model.Velocity.Value;
+            var bounds = _model.Collection.Value.Model.Bounds.Value;
+            var extents = bounds.extents;
+            
+            if (boidPosition.x <= -extents.x + bounds.center.x)
+                boidVelocity.x = SetSign(boidVelocity.x, true);
+            
+            if (boidPosition.x >= extents.x + bounds.center.x)
+                boidVelocity.x = SetSign(boidVelocity.x, false);
+            
+            if (boidPosition.y <= -extents.y + bounds.center.y)
+                boidVelocity.y = SetSign(boidVelocity.y, true);
+            
+            if (boidPosition.y >= extents.y + bounds.center.y)
+                boidVelocity.y = SetSign(boidVelocity.y, false);
+
+            _model.Velocity.Value = boidVelocity;
+        }
+
         private void OverlapBoids(Vector3 position, float radius, IEntity<BoidModel, BoidView, BoidPresenter>[] buffer)
         {
             var collection = _model.Collection.Value.Model.Items.Value;
@@ -96,6 +119,11 @@ namespace Impl.Worlds.Game.Boids.Presenter
 
                 buffer[i] = distance < radius ? collection[i] : null;
             }
+        }
+        
+        private float SetSign(float value, bool isPositive)
+        {
+            return isPositive ? value >= 0 ? value : -value : value >= 0 ? -value : value;
         }
     }
 }
